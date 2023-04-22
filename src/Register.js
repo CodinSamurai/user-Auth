@@ -1,5 +1,9 @@
 import {useState} from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import { auth } from './firebase'
+import { useAuthValue } from './createContext'
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
+// import { Auth } from 'firebase/auth'
 import './forms.css'
 
 function Register() {
@@ -8,13 +12,50 @@ function Register() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
+  const {setTimeActive} = useAuthValue()
+
+  const history = useHistory()
+  const validatePassword = () => {
+    let isValid = true
+    if (password !== '' && confirmPassword !== ''){
+      if (password !== confirmPassword) {
+        isValid = false
+        setError('Passwords does not match')
+      }
+    }
+    return isValid
+  }
+
+  const register = e => {
+    e.preventDefault()
+    setError('')
+    if(validatePassword()) {
+      // Create a new user with email and password using firebase
+        createUserWithEmailAndPassword(auth, email, password)
+        // .then((res) => {
+        //     console.log(res.user)
+        //   })
+        // .catch(err => setError(err.message))
+        .then(() => {
+          sendEmailVerification(auth.currentUser)
+          .then(() => {
+            setTimeActive(true)
+            history.push('/verify-email')
+          }).catch((err) => alert(err.message))
+        })
+    }
+    setEmail('')
+    setPassword('')
+    setConfirmPassword('')
+  }
+  
 
   return (
     <div className='center'>
       <div className='auth'>
         <h1>Register</h1>
         {error && <div className='auth__error'>{error}</div>}
-        <form name='registration_form'>
+        <form onSubmit={register} name='registration_form'>
           <input 
             type='email' 
             value={email}

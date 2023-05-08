@@ -7,11 +7,13 @@ function ResetPassword() {
 
     const [email, setEmail] = useState('')
     const auth = getAuth();
+    const navigate = useNavigate()
   
     const triggerResetEmail = async () => {
         console.log(email);
       await sendPasswordResetEmail(auth, email);
       console.log("Password reset email sent")
+      navigate('/')
     }
    
     return (

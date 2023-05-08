@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ChangeEvent, FormEvent, useState } from "react"
-import { useParams, useHistory } from "react-router-dom"
+import { useSearchParams, useNavigate } from "react-router-dom"
 import confirmThePasswordReset from "./ee"
 
   const defaultFormFields = {
@@ -13,13 +13,13 @@ import confirmThePasswordReset from "./ee"
      * Extract oobCode from the URL.
      * Delete console.log in production.
      */
-    const navigate = useHistory()
-    const [searchParams] = useParams()
+    const navigate = useNavigate()
+    const [searchParams] = useSearchParams()
     const [successMessage, setSuccessMessage] = useState(false)
     const [formFields, setFormFields] = useState(defaultFormFields)
     const { password, confirmPassword } = formFields
 
-    let oobCode= searchParams.get('oobCode')
+    let oobCode = searchParams.get('oobCode')
     
     const resetFormFields = () => {
       return (

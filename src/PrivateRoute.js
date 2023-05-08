@@ -1,15 +1,11 @@
-import {Route, Redirect} from 'react-router-dom'
-import { useAuthValue } from './createContext'
+import {Navigate} from 'react-router-dom'
+import {useAuthValue} from './createContext'
 
-export default function PrivateRoute({component:Component, ...rest}) {
+export default function PrivateRoute({children}) {
   const {currentUser} = useAuthValue()
+  if(!currentUser?.emailVerified){
+    return <Navigate to='/login' replace/>
+  }
 
-  return (
-    <Route
-      {...rest}
-      render={props => {
-        return currentUser?.emailVerified ? <Component {...props} /> : <Redirect to='/login' />
-    }}>
-    </Route>
-  )
+  return children
 }

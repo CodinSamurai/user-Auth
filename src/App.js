@@ -1,23 +1,21 @@
 import './App.css';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import { useState, useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 import { auth } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useAuthValue } from './createContext'
 import { AuthProvider } from './createContext';
 import Profile from './Profile'
 import Register from './Register'
-import ResetPassword from './TryRest';
+import ResetPassword from './ResetPassword';
+import Rest from './Rest';
 import PasswordReset from './ConfirmRest';
 import VerifyEmail from './VerifyEmail';
 import Login from './Login'
 import PrivateRoute from './PrivateRoute';
 
 function App() {
-    // function childOfAuthProvider(){
-  //   const {currentUser} = useAuthValue()
-  //   console.log(currentUser)
-  // }
   const [currentUser, setCurrentUser] = useState(null)
   const [timeActive, setTimeActive] = useState(false)
 
@@ -30,15 +28,28 @@ function App() {
   return (
     <Router>
       <AuthProvider value={{currentUser, timeActive, setTimeActive}}>
-       <Switch>
-        {/* <Route exact path="/" component={Profile} /> */}
-        <PrivateRoute exact path="/" component={Profile} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-        <Route exact path='/verify-email' component={VerifyEmail} /> 
-        <Route exact path='./try-rest' component={ResetPassword} /> 
-        <Route exact path='/confirm-rest' component={PasswordReset} /> 
-       </Switch>
+        <Routes>
+          <Route exact path='/' element={
+            <PrivateRoute>
+              <Profile/>
+            </PrivateRoute>
+          }/>
+          <Route path="/login" element={
+            !currentUser?.emailVerified 
+            ? <Login/>
+            : <Navigate to='/' replace/>
+          } />
+          <Route path="/register" element={
+            !currentUser?.emailVerified 
+            ? <Register/>
+            : <Navigate to='/' replace/>
+          } />
+          <Route path="/resetpasword" element={<ResetPassword/>
+          } />
+          <Route path='/verify-email' element={<VerifyEmail/>} /> 
+          <Route path='/rest' element={<Rest/>} /> 
+          <Route path='/res' element={<PasswordReset/>} /> 
+        </Routes>  
       </AuthProvider>
   </Router>
   );

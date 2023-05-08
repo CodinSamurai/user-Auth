@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { auth } from './firebase'
 import { useAuthValue } from './createContext'
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
@@ -14,7 +14,7 @@ function Register() {
   const [error, setError] = useState('')
   const {setTimeActive} = useAuthValue()
 
-  const history = useHistory()
+  const history = useNavigate()
   const validatePassword = () => {
     let isValid = true
     if (password !== '' && confirmPassword !== ''){
@@ -40,9 +40,10 @@ function Register() {
           sendEmailVerification(auth.currentUser)
           .then(() => {
             setTimeActive(true)
-            history.push('/verify-email')
+            history('/verify-email')
           }).catch((err) => alert(err.message))
         })
+        .catch(err => setError(err.message))
     }
     setEmail('')
     setPassword('')

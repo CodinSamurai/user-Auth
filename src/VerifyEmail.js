@@ -4,8 +4,7 @@ import { useState,useEffect } from 'react'
 import { auth } from './firebase'
 import { sendEmailVerification } from 'firebase/auth'
 import { Link } from 'react-router-dom'
-//import { useHistory } from 'react-router-dom/cjs/react-router-dom'
-import {useHistory} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 function VerifyEmail() {
 
@@ -15,7 +14,7 @@ function VerifyEmail() {
   //const [timeActive, setTimeActive] = useState(false)
   const {timeActive, setTimeActive} = useAuthValue()
 
-  const history = useHistory()
+  const history = useNavigate()
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -23,7 +22,7 @@ function VerifyEmail() {
       .then(() => {
         if(currentUser?.emailVerified){
           clearInterval(interval)
-          history.push('/')
+          history('/')
         }
       })
       .catch((err) => {
@@ -44,17 +43,17 @@ function VerifyEmail() {
       clearInterval(interval)
     }
     return () => clearInterval(interval);
-  }, [timeActive, time])
+  }, [timeActive, time,setTimeActive])
 
 const resendEmailVerification = () => {
-    setButtonDisabled(true)
+    //setButtonDisabled(true)
     sendEmailVerification(auth.currentUser)
     .then(() => {
-      setButtonDisabled(false)
+      //setButtonDisabled(false)
       setTimeActive(true)
     }).catch((err) => {
       alert(err.message)
-      setButtonDisabled(false)
+      //setButtonDisabled(false)
     })
   }
 

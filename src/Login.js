@@ -2,7 +2,7 @@ import {useState} from 'react'
 import { Link } from 'react-router-dom'
 import {signInWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
 import {auth} from './firebase'
-import {useHistory} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import {useAuthValue} from './createContext'
 import ResetPassword from './ResetPassword'
 import './forms.css'
@@ -13,7 +13,7 @@ function Login(){
   const [password, setPassword] = useState('') 
   const [error, setError] = useState('')
   const {setTimeActive} = useAuthValue()
-  const history = useHistory()
+  const history = useNavigate()
 
   const login = e => {
     e.preventDefault()
@@ -23,11 +23,11 @@ function Login(){
         sendEmailVerification(auth.currentUser)
         .then(() => {
           setTimeActive(true)
-          history.push('/verify-email')
+          history('/verify-email')
         })
       .catch(err => alert(err.message))
     }else{
-      history.push('/')
+      history('/')
     }
     })
     .catch(err => setError(err.message))
@@ -62,6 +62,11 @@ function Login(){
         <p>
           Don't have and account? 
           <Link to='/register'>Create one here</Link>
+        </p>
+        <p>
+          wanna reset password? 
+          <Link to='/resetpasword'>Reset</Link>
+          <Link to='/rest'>Rest</Link>
         </p>
       </div>
     </div>

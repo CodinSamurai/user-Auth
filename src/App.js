@@ -14,6 +14,9 @@ import PasswordReset from './ConfirmRest';
 import VerifyEmail from './VerifyEmail';
 import Login from './Login'
 import PrivateRoute from './PrivateRoute';
+import EmailVerified from './EmailVerified';
+import AuthAction from './authActions';
+import AuthUserAction from './authUaction';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null)
@@ -49,6 +52,13 @@ function App() {
           <Route path='/verify-email' element={<VerifyEmail/>} /> 
           <Route path='/rest' element={<Rest/>} /> 
           <Route path='/res' element={<PasswordReset/>} /> 
+          <Route path='/email-verified' element={<EmailVerified/>} /> 
+          <Route path='auth/action'
+            element={
+              <AuthAction>
+                <AuthUserAction />
+              </AuthAction>}
+          />
         </Routes>  
       </AuthProvider>
   </Router>

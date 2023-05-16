@@ -1,6 +1,7 @@
 import {getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { passwordReset } from "./ee";
 
 function Rest() {
     const [emailMessage, setEmailMessage] = useState(false)
@@ -16,8 +17,10 @@ function Rest() {
         e.preventDefault()
         console.log(email);
         try{
-            await sendPasswordResetEmail(auth, email);
+            //await sendPasswordResetEmail(auth, email);
+            await passwordReset(email)
             setEmailMessage(true)
+            console.log('yeee');
             // setTimeout(() => {
             //   console.log('working');
             //   history('/')

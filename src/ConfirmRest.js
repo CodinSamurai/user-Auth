@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import { ChangeEvent, FormEvent, useState } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
-import confirmThePasswordReset from "./ee"
+//import confirmThePasswordReset from "./ee"
+import { confirmThePasswordReset } from './ee'
 
   const defaultFormFields = {
     password: '',
@@ -20,7 +21,7 @@ import confirmThePasswordReset from "./ee"
     const { password, confirmPassword } = formFields
 
     let oobCode = searchParams.get('oobCode')
-    
+    console.log(oobCode);
     const resetFormFields = () => {
       return (
         setFormFields(defaultFormFields)

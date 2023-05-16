@@ -1,6 +1,9 @@
-import { confirmPasswordReset,getAuth } from 'firebase/auth';
-
-  const confirmThePasswordReset = async (
+import { confirmPasswordReset,getAuth, sendPasswordResetEmail } from 'firebase/auth';
+const auth = getAuth();
+export const passwordReset = async (email) => {
+  return await sendPasswordResetEmail(auth, email)
+}
+  export const confirmThePasswordReset = async (
     oobCode, newPassword
   ) => {
     const auth = getAuth();
@@ -9,4 +12,4 @@ import { confirmPasswordReset,getAuth } from 'firebase/auth';
     return await confirmPasswordReset(auth, oobCode, newPassword)
   }
 
-  export default confirmThePasswordReset
+//  export default confirmThePasswordReset

@@ -57,7 +57,7 @@ function Login(){
         </form>
         <ResetPassword />
         <div className="forgot">
-          <Link to='/confirmrest'>Forgot password</Link>
+          <Link to='/res'>Forgot password</Link>
         </div>
         <p>
           Don't have and account? 
@@ -67,6 +67,7 @@ function Login(){
           wanna reset password? 
           <Link to='/resetpasword'>Reset</Link>
           <Link to='/rest'>Rest</Link>
+          <Link to='/res'>confirm reset</Link>
         </p>
       </div>
     </div>

@@ -30,7 +30,12 @@ function Login(){
       history('/')
     }
     })
-    .catch(err => setError(err.message))
+    .catch(err => {
+      setError('wrong password')
+      setError(err.message)
+      console.log(err);
+      console.log(err.message);
+    })
   }
 
   return(

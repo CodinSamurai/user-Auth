@@ -55,9 +55,10 @@ function Login(){
 
           <button type='submit'>Login</button>
         </form>
-        <ResetPassword />
+        {/* works but link to a separate page below */}
+        {/* <ResetPassword /> */}
         <div className="forgot">
-          <Link to='/res'>Forgot password</Link>
+          <Link to='/rest'>Forgot password</Link>
         </div>
         <p>
           Don't have and account? 
@@ -65,9 +66,10 @@ function Login(){
         </p>
         <p>
           wanna reset password? 
-          <Link to='/resetpasword'>Reset</Link>
+          {/* same as rest but basic */}
+          {/* <Link to='/resetpasword'>Reset</Link> */}
           <Link to='/rest'>Rest</Link>
-          <Link to='/res'>confirm reset</Link>
+          {/* <Link to='/res'>confirm reset</Link> */}
         </p>
       </div>
     </div>
